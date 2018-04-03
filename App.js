@@ -1,9 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 import { AppLoading, Asset, Font } from "expo";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/es/integration/react";
+import configureStore from "./redux/configureStore";
+import AppContainer from "./components/AppContainer";
 
-export default class App extends React.Component {
+// persistGate state에 데이터가 들어오지 않으면 화면을 표시하지 않음
+const { persistor, store } = configureStore();
+
+class App extends Component {
   state = {
     isLoadingCokmplete: false
   };
@@ -21,9 +28,11 @@ export default class App extends React.Component {
       );
     }
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <AppContainer />
+        </PersistGate>
+      </Provider>
     );
   }
 
@@ -53,11 +62,4 @@ export default class App extends React.Component {
   };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+export default App;
