@@ -10,6 +10,8 @@ import AppContainer from "./components/AppContainer";
 // persistGate state에 데이터가 들어오지 않으면 화면을 표시하지 않음
 const { persistor, store } = configureStore();
 
+// store.dispatch({type:"LOG_OUT"});
+
 class App extends Component {
   state = {
     isLoadingCokmplete: false
